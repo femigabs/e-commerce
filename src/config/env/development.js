@@ -1,0 +1,6 @@
+import 'dotenv/config';
+
+
+export default {
+    DATABASE_URL: process.env.ECOMMERCE_DATABASE_DEV_URL
+};
