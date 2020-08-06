@@ -10,5 +10,7 @@ CREATE TABLE IF NOT EXISTS users (
   is_admin boolean default false,
   is_active boolean default false,
   created_at timestamp default NOW(),
-  updated_at timestamp
+  updated_at timestamp,
+  verification_code_expiry timestamp,
+  verification_code varchar
 );

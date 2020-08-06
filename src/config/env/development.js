@@ -1,6 +1,17 @@
 import 'dotenv/config';
 
-
 export default {
-    DATABASE_URL: process.env.ECOMMERCE_DATABASE_DEV_URL
+    DATABASE_URL: process.env.ECOMMERCE_DATABASE_DEV_URL,
+    ECOMMERCE_DATABASE_TEST_URL: process.env.ECOMMERCE_DATABASE_TEST_URL,
+    ECOMMERCE_NODE_ENV: process.env.ECOMMERCE_NODE_ENV,
+    SECRET: process.env.SECRET,
+    SMTP_HOST_FROM: process.env.SMTP_HOST_FROM,
+    SMTP_HOST_PASSWORD: process.env.SMTP_HOST_PASSWORD,
+    FACEBOOK_APP_ID: process.env.FACEBOOK_APP_ID,
+    FACEBOOK_APP_SECRET: process.env.FACEBOOK_APP_SECRET,
+    FACEBOOK_CALLBACK_URL: process.env.FACEBOOK_CALLBACK_URL,
+    PASSWORD: process.env.PASSWORD,
+    SALT: process.env.SALT,
+    SENDGRID_KEY: process.env.SENDGRID_KEY,
+    SENDGRID_FROM: process.env.SENDGRID_FROM
 };

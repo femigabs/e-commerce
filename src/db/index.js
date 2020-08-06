@@ -1,6 +1,7 @@
 import db from './setup/postgres';
-// import userQuery from './queries/users';
+import userQuery from './queries/user';
 
 export {
-    db
+    db,
+    userQuery
 };
