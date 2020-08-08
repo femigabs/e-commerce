@@ -1,3 +1,4 @@
 import UserServices from './userServices'
+import CategoryServices from './categoryServices'
 
-export { UserServices }
+export { UserServices, CategoryServices }

@@ -13,7 +13,7 @@ class UserController {
             await MailMiddleware.sendVerificationMail(newUser.email, newUser.verification_code, newUser.id, newUser.first_name, newUser.last_name)
 
             return newUser
-                ? Response.ok(
+                ? Response.created(
                     res,
                     newUser,
                     "User created successfully."
