@@ -39,15 +39,6 @@ class UserMiddleware {
         next();
     }
 
-    static async checkEmail(req, res, next) {
-        const { email } = req.body
-        const user = await UserServices.checkIfUserExist(email);
-        if (user) {
-            return next();
-        }
-        return Response.notFoundError(res, 'User does not exist');
-    }
-
     static async checkId(req, res, next) {
         const { id } = req.query
         const userId = await UserServices.checkIfIdExist(id);
@@ -149,7 +140,6 @@ class UserMiddleware {
                 email: decoded.email
             }
             res.locals.user = req.user;
-            console.log('qqq', res.locals.user)
             next();
 
         } catch (e) {

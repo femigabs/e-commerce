@@ -19,6 +19,7 @@ const schema = {
                 )
             )
     }),
+
     login: Joi.object({
         email: Joi.string().email().required(),
         password: Joi.string().pattern(
@@ -27,12 +28,15 @@ const schema = {
             )
         ),
     }),
+
     idparam: Joi.number().required(),
+
     email: Joi.object({
         email: Joi.string().email().required()
     }),
+
     category: Joi.object({
-        name: Joi.string().max(100).required(),
+        product_type: Joi.string().max(100).required(),
         description: Joi.string().required()
     })
 };
