@@ -16,3 +16,5 @@ app.get('/', (req, res) => {
         res.send(msg, status.OK);
     });
 });
+
+export default app;
