@@ -38,6 +38,26 @@ const schema = {
     category: Joi.object({
         product_type: Joi.string().max(100).required(),
         description: Joi.string().required()
+    }),
+
+    subCategory: Joi.object({
+        product_sub_category: Joi.string().max(100).required(),
+        description: Joi.string().required()
+    }),
+
+    product: Joi.object({
+        product_name: Joi.string().max(100).required(), 
+        description: Joi.string().required(),
+        quantity: Joi.number().required(),
+        price: Joi.number().required(),
+    }),
+
+    productStatus: Joi.object({
+        status: Joi.string().valid('in_stock', 'out_of_stock')
+    }),
+
+    productName: Joi.object({
+        product_name: Joi.string().required()
     })
 };
 

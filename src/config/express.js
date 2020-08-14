@@ -1,4 +1,6 @@
 import express from 'express';
+import status from 'http-status'
+import client from './redis'
 import passport from 'passport';
 import bodyParser from 'body-parser';
 import session from 'express-session';
@@ -28,9 +30,13 @@ app.use(passport.session());
 app.use(cors());
 
 app.get('/', (req, res) => {
-    res.send('Welcome to e_commerce');
+    client.ping((err, msg) => {
+        if (err) {
+            return res.send(status.INTERNAL_SERVER_ERROR);
+        }
+        res.send(msg, status.OK);
+    });
 });
-
 
 router(app);
 

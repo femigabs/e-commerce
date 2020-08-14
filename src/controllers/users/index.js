@@ -135,7 +135,6 @@ class UserController {
                 );
 
         } catch (e) {
-            console.log('eee', e)
             return Response.serverError(res, 'Internal Server Error.');
         }
     }

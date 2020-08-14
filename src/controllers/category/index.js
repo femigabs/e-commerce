@@ -1,5 +1,5 @@
 import { CategoryServices } from "../../services";
-import { Response, Hash } from '../../utils';
+import { Response } from '../../utils';
 
 class CategoryController {
 
@@ -17,7 +17,6 @@ class CategoryController {
                     "Error creating Category."
                 )
         } catch (e) {
-            console.log('nnn', e)
             return Response.serverError(
                 res,
                 "Internal Server Error."
@@ -40,7 +39,6 @@ class CategoryController {
                     "Error fetching Category."
                 )
         } catch (e) {
-            console.log('aa', e)
             return Response.serverError(
                 res,
                 "Internal Server Error."

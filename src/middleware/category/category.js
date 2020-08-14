@@ -37,14 +37,15 @@ class CategoryMiddleware {
         next();
     }
 
-    static async checkId(req, res, next) {
+    static async checkCategoryId(req, res, next) {
         const { id } = req.params;
         const categoryId = await CategoryServices.checkIfIdExist(id);
+        console.log('www', categoryId)
         if (categoryId) {
             return next();
         }
-        return Response.notFoundError(res, 'Category does not exist');
-    };
+        return Response.notFoundError(res, 'Category Id not found');
+    }
 
 }
 
