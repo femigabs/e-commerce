@@ -1,6 +1,5 @@
 import { db, categoryQuery } from "../db"
 import { v4 as uuidv4 } from 'uuid';
-import { Hash } from '../utils';
 
 class CategoryServices {
 

@@ -1,10 +1,10 @@
 export default {
     createCategory: `
-    INSERT INTO category(
-        id,
-        product_type,
-        description
-    ) VALUES ($1, $2, $3) RETURNING *
+        INSERT INTO category(
+            id,
+            product_type,
+            description
+        ) VALUES ($1, $2, $3) RETURNING *
     `,
     getCategoryByProductType: `
         SELECT * FROM category WHERE product_type=($1)

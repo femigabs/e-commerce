@@ -13,5 +13,10 @@ export default {
     PASSWORD: process.env.PASSWORD,
     SALT: process.env.SALT,
     SENDGRID_KEY: process.env.SENDGRID_KEY,
-    SENDGRID_FROM: process.env.SENDGRID_FROM
+    SENDGRID_FROM: process.env.SENDGRID_FROM,
+    REDIS_URL: process.env.REDIS_URL,
+    ACCESS_KEY_ID: process.env.ACCESS_KEY_ID,
+    SECRET_ACCESS_KEY: process.env.SECRET_ACCESS_KEY,
+    BUCKET_NAME: process.env.BUCKET_NAME
+
 };
