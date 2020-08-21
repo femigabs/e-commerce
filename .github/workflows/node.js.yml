@@ -22,7 +22,9 @@ jobs:
       postgres:
         image: postgres
         env:
+          POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: ECOMMERCE_DATABASE_TEST_URL
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -32,6 +34,10 @@ jobs:
           - 5432:5432
       redis:
         image: redis
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: ECOMMERCE_DATABASE_TEST_URL
         options: >-
           --health-cmd "redis-cli ping"
           --health-interval 10s
