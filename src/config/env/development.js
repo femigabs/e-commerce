@@ -10,6 +10,9 @@ export default {
     FACEBOOK_APP_ID: process.env.FACEBOOK_APP_ID,
     FACEBOOK_APP_SECRET: process.env.FACEBOOK_APP_SECRET,
     FACEBOOK_CALLBACK_URL: process.env.FACEBOOK_CALLBACK_URL,
+    GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
+    GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
+    GOOGLE_CALLBACK_URL: process.env.GOOGLE_CALLBACK_URL,
     PASSWORD: process.env.PASSWORD,
     SALT: process.env.SALT,
     SENDGRID_KEY: process.env.SENDGRID_KEY,
@@ -18,6 +21,9 @@ export default {
     ACCESS_KEY_ID: process.env.ACCESS_KEY_ID,
     SECRET_ACCESS_KEY: process.env.SECRET_ACCESS_KEY,
     BUCKET_NAME: process.env.BUCKET_NAME,
-    PAYSTACK_SECRET_KEY: process.env.PAYSTACK_SECRET_KEY
+    PAYSTACK_SECRET_KEY: process.env.PAYSTACK_SECRET_KEY,
+    POSTGRES_PASSWORD: process.env.POSTGRES_PASSWORD,
+    POSTGRES_USER: process.env.POSTGRES_USER,
+    POSTGRES_DB: process.env.POSTGRES_DB
     
 };

@@ -18,11 +18,6 @@ class TransactionController {
             const options = {
 
             }
-            const configData = {
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }
-            }
         } catch (error) {
             return Response.serverError(
                 res,

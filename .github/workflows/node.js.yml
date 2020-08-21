@@ -16,13 +16,15 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x]
+        node-version: [12.x, 14.x]
   
     services:
       postgres:
         image: postgres
         env:
+          POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: e_commerce_test
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -32,6 +34,10 @@ jobs:
           - 5432:5432
       redis:
         image: redis
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: e_commerce_test
         options: >-
           --health-cmd "redis-cli ping"
           --health-interval 10s
@@ -49,3 +55,22 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
+
+    env:
+      ECOMMERCE_DATABASE_TEST_URL: 'postgres://postgres:postgres@localhost:5432/e_commerce_test'
+      ECOMMERCE_NODE_ENV: test
+      SECRET: ${{secrets.SECRET}}
+      SMTP_HOST_FROM: ${{secrets.SMTP_HOST_FROM}}
+      SMTP_HOST_PASSWORD: ${{secrets.SMTP_HOST_PASSWORD}}
+      FACEBOOK_APP_ID: ${{secrets.FACEBOOK_APP_ID}}
+      FACEBOOK_APP_SECRET: ${{secrets.FACEBOOK_APP_SECRET}}
+      FACEBOOK_CALLBACK_URL: ${{secrets.FACEBOOK_CALLBACK_URL}}
+      GOOGLE_CLIENT_ID: ${{secrets.GOOGLE_CLIENT_ID}}
+      GOOGLE_CLIENT_SECRET: ${{secrets.GOOGLE_CLIENT_SECRET}}
+      GOOGLE_CALLBACK_URL: ${{secrets.GOOGLE_CALLBACK_URL}}
+      PASSWORD: ${{secrets.PASSWORD}}
+      SALT: ${{secrets.SALT}}
+      REDIS_URL: ${{secrets.REDIS_URL}}
+      ACCESS_KEY_ID: ${{secrets.ACCESS_KEY_ID}}
+      SECRET_ACCESS_KEY: ${{secrets.SECRET_ACCESS_KEY}}
+      BUCKET_NAME: ${{secrets.BUCKET_NAME}}
