@@ -4,7 +4,7 @@ services:
     image: "redis:alpine"
     container_name: cache
     expose:
-      - 6379
+      - "6379"
 
   db: 
     env_file: 
