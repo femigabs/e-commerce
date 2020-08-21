@@ -18,6 +18,9 @@ export default {
     ACCESS_KEY_ID: process.env.ACCESS_KEY_ID,
     SECRET_ACCESS_KEY: process.env.SECRET_ACCESS_KEY,
     BUCKET_NAME: process.env.BUCKET_NAME,
-    PAYSTACK_SECRET_KEY: process.env.PAYSTACK_SECRET_KEY
+    PAYSTACK_SECRET_KEY: process.env.PAYSTACK_SECRET_KEY,
+    POSTGRES_PASSWORD: process.env.POSTGRES_PASSWORD,
+    POSTGRES_USER: process.env.POSTGRES_USER,
+    POSTGRES_DB: process.env.POSTGRES_DB
     
 };
