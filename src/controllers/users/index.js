@@ -22,7 +22,7 @@ class UserController {
                     res,
                     "Error creating User."
                 )
-        } catch (e) {
+        } catch (error) {
             return Response.serverError(
                 res,
                 "Internal Server Error."
@@ -110,8 +110,7 @@ class UserController {
                     'Error Sending Reset link.'
                 );
 
-        } catch (e) {
-            console.log(e)
+        } catch (error) {
             return Response.serverError(res, 'Internal Server Error.');
         }
     }
@@ -134,7 +133,7 @@ class UserController {
                     'Error resetting User.'
                 );
 
-        } catch (e) {
+        } catch (error) {
             return Response.serverError(res, 'Internal Server Error.');
         }
     }

@@ -21,7 +21,7 @@ class ProductController {
                     res,
                     "Error creating Product."
                 )
-        } catch (e) {
+        } catch (error) {
             return Response.serverError(
                 res,
                 "Internal Server Error."
@@ -42,8 +42,7 @@ class ProductController {
                     res,
                     "Error fetching Product."
                 )
-        } catch (e) {
-            console.log(e);
+        } catch (error) {
             return Response.serverError(
                 res,
                 "Internal Server Error."
@@ -65,7 +64,6 @@ class ProductController {
                     "Error fetching Product."
                 )
         } catch (error) {
-            console.log("ProductController -> searchProduct -> error", error)
             return Response.serverError(
                 res,
                 "Internal Server Error."
@@ -87,8 +85,7 @@ class ProductController {
                     res,
                     "Error fetching Product."
                 )
-        } catch (e) {
-            console.log(e);
+        } catch (error) {
             return Response.serverError(
                 res,
                 "Internal Server Error."
@@ -111,7 +108,7 @@ class ProductController {
                     res,
                     'Error deleting Product'
                 )
-        } catch (e) {
+        } catch (error) {
             return Response.serverError(
                 res,
                 "Internal Server Error."
@@ -138,7 +135,6 @@ class ProductController {
                     'Error updating Product'
                 )
         } catch (error) {
-            console.log("ProductController -> updateProduct -> error", error)
             return Response.serverError(
                 res,
                 "Internal Server Error."

@@ -8,7 +8,6 @@ class UserMiddleware {
             await Validate.schema.user.validateAsync(req.body);
             next();
         } catch (error) {
-            console.log(error);
             return res.status(400).json({
                 error: error.details[0].message.replace(
                     /[\]["]/gi,
@@ -30,7 +29,7 @@ class UserMiddleware {
                     "User already exist"
                 )
             }
-        } catch (e) {
+        } catch (error) {
             return Response.serverError(
                 res,
                 "Internal server error"
@@ -199,7 +198,7 @@ class UserMiddleware {
             } else {
                 return Response.notFoundError(res, 'Verification code is invalid');
             }
-        } catch (e) {
+        } catch (error) {
             return Response.serverError(
                 res,
                 "Internal server error"

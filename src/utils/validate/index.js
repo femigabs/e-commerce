@@ -58,6 +58,24 @@ const schema = {
 
     productName: Joi.object({
         product_name: Joi.string().required()
+    }),
+
+    orderStatus: Joi.object({
+        status: Joi.string().valid('pending', 'in_transit', 'delivered')
+    }),
+
+    orderDetails: Joi.object({
+        first_name: Joi.string().max(100).required(),
+        last_name: Joi.string().max(100).required(),
+        address: Joi.string().max(100).required(),
+        state: Joi.string().max(100).required(),
+        city: Joi.string().max(100).required(),
+        phone_number: Joi.string()
+            .pattern(
+                new RegExp(
+                    /^\d{11}$/
+                )
+            )
     })
 };
 
