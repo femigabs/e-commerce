@@ -32,9 +32,12 @@ app.use(cors());
 app.get('/', (req, res) => {
     client.ping((err, msg) => {
         if (err) {
-            return res.send(status.INTERNAL_SERVER_ERROR);
+            return Response.serverError(
+                res,
+                "Internal Server Error."
+            )
         }
-        res.send(msg, status.OK);
+        res.status(status).send(res.body)
     });
 });
 
@@ -42,10 +45,6 @@ router(app);
 
 app.use((req, res) => {
     Response.notFoundError(res, 'Route not found!');
-});
-
-app.use((err, req, res) => {
-    Response.notFoundError(res, err.message || err);
 });
 
 export default app;

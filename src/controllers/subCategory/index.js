@@ -79,7 +79,7 @@ class SubCategoryController {
                 ? Response.ok(
                     res,
                     subCategory,
-                    'Category deleted successfully'
+                    'Sub Category deleted successfully'
                 )
                 : Response.badrequestError(
                     res,

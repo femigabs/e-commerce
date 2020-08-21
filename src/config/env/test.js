@@ -17,5 +17,7 @@ export default {
     REDIS_URL: process.env.REDIS_URL,
     ACCESS_KEY_ID: process.env.ACCESS_KEY_ID,
     SECRET_ACCESS_KEY: process.env.SECRET_ACCESS_KEY,
-    BUCKET_NAME: process.env.BUCKET_NAME
+    BUCKET_NAME: process.env.BUCKET_NAME,
+    PAYSTACK_SECRET_KEY: process.env.PAYSTACK_SECRET_KEY
+
 };

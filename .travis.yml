@@ -1,0 +1,13 @@
+language: node_js
+node_js:
+  - "12"
+services:
+  - postgresql
+cache:
+  directories:
+    - "node_modules"
+before_script:
+  - npm install
+  - psql -c 'create database e_commerce_test;' -U postgres
+script:
+- npm run test

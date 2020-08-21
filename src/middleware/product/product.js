@@ -1,6 +1,5 @@
 import { Validate, Response } from "../../utils";
 import { ProductServices } from "../../services";
-import e from "express";
 
 class ProductMiddleware {
 

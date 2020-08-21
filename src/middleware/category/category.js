@@ -1,4 +1,4 @@
-import { Validate, Hash, Response } from "../../utils";
+import { Validate, Response } from "../../utils";
 import { CategoryServices } from "../../services";
 
 class CategoryMiddleware {
@@ -40,7 +40,6 @@ class CategoryMiddleware {
     static async checkCategoryId(req, res, next) {
         const { id } = req.params;
         const categoryId = await CategoryServices.checkIfIdExist(id);
-        console.log('www', categoryId)
         if (categoryId) {
             return next();
         }
