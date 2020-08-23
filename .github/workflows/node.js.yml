@@ -74,3 +74,4 @@ jobs:
       ACCESS_KEY_ID: ${{secrets.ACCESS_KEY_ID}}
       SECRET_ACCESS_KEY: ${{secrets.SECRET_ACCESS_KEY}}
       BUCKET_NAME: ${{secrets.BUCKET_NAME}}
+      CC_TEST_REPORTER_ID: 9da5e9efde1962e57dbb2a42fa661b1c77ae797093dd964d46e06d83a4447d3e
