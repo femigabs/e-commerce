@@ -1,5 +1,5 @@
 exclude_patterns:
-  - "tests/"
+  - "test/"
   - "spec/"
   - "coverage/"
   - "migrations/"
