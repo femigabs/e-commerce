@@ -1,0 +1,7 @@
+exclude_patterns:
+  - "tests/"
+  - "spec/"
+  - "coverage/"
+  - "migrations/"
+  - "node_modeules"
+  - "src/utils/emailTemplate/index.js"
