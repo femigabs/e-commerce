@@ -9,5 +9,13 @@ cache:
 before_script:
   - npm install
   - psql -c 'create database e_commerce_test;' -U postgres
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
 script:
 - npm run test
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+env:
+  global:
+    CC_TEST_REPORTER_ID=9da5e9efde1962e57dbb2a42fa661b1c77ae797093dd964d46e06d83a4447d3e
