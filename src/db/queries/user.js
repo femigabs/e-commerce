@@ -43,12 +43,5 @@ export default {
     `,
     checkIfUserIsVerified: `
     SELECT * FROM users WHERE is_active=($1)
-    `,
-    createCategory: `
-    INSERT INTO category(
-        id,
-        name,
-        description,
-    ) VALUES ($1, $2, $3) RETURNING *
-    `,
+    `
 }

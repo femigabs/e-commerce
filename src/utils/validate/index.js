@@ -19,6 +19,7 @@ const schema = {
                 )
             )
     }),
+
     login: Joi.object({
         email: Joi.string().email().required(),
         password: Joi.string().pattern(
@@ -27,13 +28,54 @@ const schema = {
             )
         ),
     }),
+
     idparam: Joi.number().required(),
+
     email: Joi.object({
         email: Joi.string().email().required()
     }),
+
     category: Joi.object({
-        name: Joi.string().max(100).required(),
+        product_type: Joi.string().max(100).required(),
         description: Joi.string().required()
+    }),
+
+    subCategory: Joi.object({
+        product_sub_category: Joi.string().max(100).required(),
+        description: Joi.string().required()
+    }),
+
+    product: Joi.object({
+        product_name: Joi.string().max(100).required(), 
+        description: Joi.string().required(),
+        quantity: Joi.number().required(),
+        price: Joi.number().required(),
+    }),
+
+    productStatus: Joi.object({
+        status: Joi.string().valid('in_stock', 'out_of_stock')
+    }),
+
+    productName: Joi.object({
+        product_name: Joi.string().required()
+    }),
+
+    orderStatus: Joi.object({
+        status: Joi.string().valid('pending', 'in_transit', 'delivered')
+    }),
+
+    orderDetails: Joi.object({
+        first_name: Joi.string().max(100).required(),
+        last_name: Joi.string().max(100).required(),
+        address: Joi.string().max(100).required(),
+        state: Joi.string().max(100).required(),
+        city: Joi.string().max(100).required(),
+        phone_number: Joi.string()
+            .pattern(
+                new RegExp(
+                    /^\d{11}$/
+                )
+            )
     })
 };
 

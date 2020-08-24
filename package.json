@@ -3,10 +3,25 @@
   "version": "1.0.0",
   "description": "E-commerce  Build specification",
   "main": "index.js",
+  "nyc": {
+    "all": false,
+    "include": [
+      "src/**"
+    ],
+    "exclude": [],
+    "excludeNodeModules": false,
+    "ignore-class-method": []
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "NODE_ENV=test nyc --reporter=html --reporter=text-summary node_modules/.bin/mocha --timeout 300000 --require @babel/register \"./test/**/*.js\" --exit",
     "start": "node src/app.js",
-    "local:start": "nodemon --exec babel-node src/app.js",
+    "devstart": "nodemon --exec babel-node src/app.js",
+    "migrate:up": "db-migrate up --config database.json -e development",
+    "migrate:down": "db-migrate down -c 200 --config database.json -e development",
+    "postmigrate-test:up": "db-migrate up:seeds --config database.json -e test",
+    "migrate-test:up": "db-migrate up --config database.json -e test",
+    "migrate-test:down": "db-migrate down -c 200 --config database.json -e test",
+    "premigrate-test:down": "db-migrate down:seeds -c 200 --config database.json -e test",
     "lint": "eslint --ext js ."
   },
   "repository": {
@@ -20,13 +35,19 @@
   },
   "homepage": "https://github.com/femigabs/e-commerce#readme",
   "dependencies": {
+    "@babel/plugin-transform-runtime": "^7.11.0",
+    "@babel/runtime": "^7.11.2",
     "@hapi/joi": "^17.1.1",
     "@sendgrid/mail": "^7.2.2",
+    "aws-sdk": "^2.731.0",
+    "axios": "^0.19.2",
+    "babel-plugin-istanbul": "^6.0.0",
     "bcrypt": "^5.0.0",
     "bluebird": "^3.7.2",
     "body-parser": "^1.19.0",
     "chai": "^4.2.0",
     "cookie-parser": "^1.4.5",
+    "core-js": "^3.6.5",
     "cors": "^2.8.5",
     "db-migrate": "^0.11.11",
     "db-migrate-pg": "^1.2.2",
@@ -35,8 +56,9 @@
     "http-status": "^1.4.2",
     "jsonwebtoken": "^8.5.1",
     "mailgun-js": "^0.22.0",
-    "mocha": "^8.0.1",
+    "mocha": "^8.1.1",
     "moment": "^2.27.0",
+    "multer": "^1.4.2",
     "nodemailer": "^6.4.10",
     "nyc": "^15.1.0",
     "passport": "^0.4.1",
@@ -46,6 +68,7 @@
     "pg": "^8.3.0",
     "pg-promise": "^10.5.8",
     "redis": "^3.0.2",
+    "supertest": "^4.0.2",
     "uuid": "^8.2.0",
     "winston": "^3.3.3"
   },
@@ -54,11 +77,13 @@
     "@babel/node": "^7.10.5",
     "@babel/preset-env": "^7.10.4",
     "babel-eslint": "^10.1.0",
+    "cross-env": "^7.0.2",
     "eslint": "^7.4.0",
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-plugin-import": "^2.22.0",
     "express": "^4.17.1",
     "husky": "^4.2.5",
+    "node-cmd": "^3.0.0",
     "nodemon": "^2.0.4"
   }
 }

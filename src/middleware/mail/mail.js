@@ -84,19 +84,21 @@ class MailMiddleware {
     }
 
     static async sendMailTemplate(data) {
-        return new Promise((resolve, reject) => {
-            transport.sendMail(data, (err, info) => {
-                if (err) {
-                    reject(
-                        Response.transactionError(
-                            "There was an error sending mail"
-                        )
-                    );
-                } else {
-                    resolve("Mail Sent Successfully");
-                }
-            });
-        })
+        if (process.env.NODE_ENV != "test") {
+            return new Promise((resolve, reject) => {
+                transport.sendMail(data, (err, info) => {
+                    if (err) {
+                        reject(
+                            Response.transactionError(
+                                "There was an error sending mail"
+                            )
+                        );
+                    } else {
+                        resolve("Mail Sent Successfully");
+                    }
+                });
+            })
+        }
     }
 }
 

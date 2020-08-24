@@ -48,7 +48,7 @@ class Helpers {
      * @return {object}
      */
     static generateToken(first_name, email) {
-        return jwt.sign({ first_name, email }, key, { expiresIn: '1h' });
+        return jwt.sign({ first_name, email }, key, { expiresIn: '1d' });
     }
 
     /**

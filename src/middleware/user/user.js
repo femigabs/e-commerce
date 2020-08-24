@@ -8,7 +8,6 @@ class UserMiddleware {
             await Validate.schema.user.validateAsync(req.body);
             next();
         } catch (error) {
-            console.log(error);
             return res.status(400).json({
                 error: error.details[0].message.replace(
                     /[\]["]/gi,
@@ -30,22 +29,13 @@ class UserMiddleware {
                     "User already exist"
                 )
             }
-        } catch (e) {
+        } catch (error) {
             return Response.serverError(
                 res,
                 "Internal server error"
             )
         }
         next();
-    }
-
-    static async checkEmail(req, res, next) {
-        const { email } = req.body
-        const user = await UserServices.checkIfUserExist(email);
-        if (user) {
-            return next();
-        }
-        return Response.notFoundError(res, 'User does not exist');
     }
 
     static async checkId(req, res, next) {
@@ -62,14 +52,32 @@ class UserMiddleware {
         try {
             const data = await UserServices.checkIfCodeExist(verification_code);
             if (data) {
-                const code_expiry = data.verification_code_expiry;
                 const is_active = data.is_active;
                 if (is_active) {
                     return Response.conflictError(
                         res,
                         "Account already verified"
                     )
-                } else if (moment().isAfter(code_expiry)) {
+                }
+            } else {
+                return Response.notFoundError(res, 'Verification code is invalid');
+            }
+        } catch (error) {
+            return Response.serverError(
+                res,
+                "Internal server error"
+            )
+        }
+        next();
+    }
+
+    static async checkExpiry(req, res, next) {
+        const { verification_code } = req.body
+        try {
+            const data = await UserServices.checkIfCodeExist(verification_code);
+            if (data) {
+                const code_expiry = data.verification_code_expiry;
+                if (moment().isAfter(code_expiry)) {
                     return Response.goneError(
                         res,
                         "Your verification code has expired, Please request a new one"
@@ -78,10 +86,10 @@ class UserMiddleware {
             } else {
                 return Response.notFoundError(res, 'Verification code is invalid');
             }
-        } catch (e) {
+        } catch (error) {
             return Response.serverError(
                 res,
-                "Internal server error"
+                'Internal server error'
             )
         }
         next();
@@ -149,7 +157,6 @@ class UserMiddleware {
                 email: decoded.email
             }
             res.locals.user = req.user;
-            console.log('qqq', res.locals.user)
             next();
 
         } catch (e) {
@@ -196,26 +203,18 @@ class UserMiddleware {
         try {
             const data = await UserServices.checkIfCodeExist(verification_code);
             if (data) {
-                const code_expiry = data.verification_code_expiry;
                 const is_active = data.is_active;
                 if (is_active) {
-                    if (moment().isAfter(code_expiry)) {
-                        return Response.goneError(
-                            res,
-                            "Your verification code has expired, Please request a new one"
-                        )
-                    }
+                    return next();
                 }
-            } else {
-                return Response.notFoundError(res, 'Verification code is invalid');
-            }
-        } catch (e) {
+            } 
+            return Response.notFoundError(res, 'Account is not verified, Please verify account');
+        } catch (error) {
             return Response.serverError(
                 res,
                 "Internal server error"
             )
         }
-        next();
     };
 
 

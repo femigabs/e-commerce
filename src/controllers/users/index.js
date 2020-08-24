@@ -13,7 +13,7 @@ class UserController {
             await MailMiddleware.sendVerificationMail(newUser.email, newUser.verification_code, newUser.id, newUser.first_name, newUser.last_name)
 
             return newUser
-                ? Response.ok(
+                ? Response.created(
                     res,
                     newUser,
                     "User created successfully."
@@ -22,7 +22,7 @@ class UserController {
                     res,
                     "Error creating User."
                 )
-        } catch (e) {
+        } catch (error) {
             return Response.serverError(
                 res,
                 "Internal Server Error."
@@ -110,8 +110,7 @@ class UserController {
                     'Error Sending Reset link.'
                 );
 
-        } catch (e) {
-            console.log(e)
+        } catch (error) {
             return Response.serverError(res, 'Internal Server Error.');
         }
     }
@@ -134,8 +133,7 @@ class UserController {
                     'Error resetting User.'
                 );
 
-        } catch (e) {
-            console.log('eee', e)
+        } catch (error) {
             return Response.serverError(res, 'Internal Server Error.');
         }
     }
