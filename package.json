@@ -15,6 +15,7 @@
   "scripts": {
     "test": "NODE_ENV=test nyc --reporter=html --reporter=text-summary node_modules/.bin/mocha --timeout 300000 --require @babel/register \"./test/**/*.js\" --exit",
     "start": "node build/app.js",
+    "build": "babel src -d build",
     "devstart": "nodemon --exec babel-node src/app.js",
     "migrate:up": "db-migrate up --config database.json -e development",
     "migrate:down": "db-migrate down -c 200 --config database.json -e development",
@@ -22,9 +23,7 @@
     "migrate-test:up": "db-migrate up --config database.json -e test",
     "migrate-test:down": "db-migrate down -c 200 --config database.json -e test",
     "premigrate-test:down": "db-migrate down:seeds -c 200 --config database.json -e test",
-    "lint": "eslint --ext js .",
-    "build": "babel src -d --out-dir build"
-    
+    "lint": "eslint --ext js ."
   },
   "repository": {
     "type": "git",
@@ -75,6 +74,7 @@
     "winston": "^3.3.3"
   },
   "devDependencies": {
+    "@babel/cli": "^7.10.5",
     "@babel/core": "^7.10.5",
     "@babel/node": "^7.10.5",
     "@babel/preset-env": "^7.10.4",
