@@ -37,7 +37,7 @@ app.get('/', (req, res) => {
                 "Internal Server Error."
             )
         }
-        res.status(status.OK).send(res.body)
+        res.status(200).send(res.body)
     });
 });
 
