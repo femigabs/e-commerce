@@ -24,6 +24,7 @@
     "premigrate-test:down": "db-migrate down:seeds -c 200 --config database.json -e test",
     "lint": "eslint --ext js .",
     "build": "babel src -d --out-dir build"
+    
   },
   "repository": {
     "type": "git",
