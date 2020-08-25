@@ -1,6 +1,7 @@
 import request from "supertest";
 import { expect } from "chai";
 import { app } from '../../../src/config';
+import { object } from "@hapi/joi";
 
 const agent = request(app);
 
@@ -19,9 +20,9 @@ describe("Product endpoints", () => {
             .expect("Content-Type", /json/)
             .end((err, res) => {
                 if (err) throw err;
-                expect(res.body.data).to.be.a("string");
+                expect(res.body.data).to.be.an(object);
                 expect(res.body.status).to.equal(200);
-                adminToken = res.body.data;
+                adminToken = res.body.data.token;
                 done();
             });
     });
