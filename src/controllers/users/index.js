@@ -15,10 +15,11 @@ class UserController {
                 id: newUser.id,
                 first_name: newUser.first_name,
                 last_name: newUser.last_name,
+                verification_code: newUser.verification_code,
                 created_at: newUser.created_at
             }
             return newUser
-                ? Response.created(res, data, "User created succesfully.")
+                ? Response.created(res, data, "User created successfully.")
                 : Response.badrequestError(res, "Error creating User.")
         } catch (error) {
             return Response.serverError(res, "Internal Server Error.")
@@ -67,6 +68,7 @@ class UserController {
                     id: user.id,
                     first_name: user.first_name,
                     last_name: user.last_name,
+                    verification_code: user.verification_code,
                     token: token
                 }
                 return Response.ok(res, data, 'User login successfully.');
@@ -83,9 +85,12 @@ class UserController {
             const profile = await UserServices.checkIfUserExist(email);
             const id = profile.id;
             const user = await UserServices.updateVerificationCode(id);
+            const data = {
+                verification_code: user[0].verification_code
+            }
             await MailMiddleware.resetPasswordMail(user[0].email, user[0].verification_code, user[0].id);
             return user
-                ? Response.ok(res, {}, 'Reset link sent successfully.')
+                ? Response.ok(res, data, 'Reset link sent successfully.')
                 : Response.badrequestError(res, 'Error Sending Reset link.');
 
         } catch (error) {

@@ -25,8 +25,8 @@ describe("User endpoints", () => {
             .expect("Content-Type", /json/)
             .end((err, res) => {
                 if (err) throw err;
-                //expect(res.body.status).to.equal(201);
-                //expect(res.body.message).to.equal("User created successfully.");
+                expect(res.body.status).to.equal(201);
+                expect(res.body.message).to.equal("User created successfully.");
                 verificationCode = res.body.data.verification_code;
                 userId = res.body.data.id;
                 done();
@@ -97,10 +97,11 @@ describe("User endpoints", () => {
             .set("Content-Type", "application/json")
             .expect("Content-Type", /json/)
             .end((err, res) => {
+            console.log("err", err, res.body)
                 if (err) throw err;
                 expect(res.body.status).to.equal(200);
                 expect(res.body.message).to.equal("Reset link sent successfully.");
-                newCode = res.body.data[0].verification_code;
+                newCode = res.body.data.verification_code;
                 done();
             });
     })

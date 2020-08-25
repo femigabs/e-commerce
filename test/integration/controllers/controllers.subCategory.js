@@ -24,7 +24,6 @@ describe("Category endpoints", () => {
             .expect("Content-Type", /json/)
             .end((err, res) => {
                 if (err) throw err;
-                expect(res.body.data).to.be.an(object);
                 expect(res.body.status).to.equal(200);
                 adminToken = res.body.data.token;
                 done();
