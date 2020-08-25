@@ -1,6 +1,7 @@
 import request from "supertest";
 import { expect } from "chai";
 import { app } from '../../../src/config';
+import { object } from "@hapi/joi";
 
 const agent = request(app);
 
@@ -19,9 +20,8 @@ describe("Cart endpoints", () => {
             .expect("Content-Type", /json/)
             .end((err, res) => {
                 if (err) throw err;
-                expect(res.body.data).to.be.a("string");
                 expect(res.body.status).to.equal(200);
-                userToken = res.body.data;
+                userToken = res.body.data.token;            
                 done();
             });
     });
@@ -30,7 +30,7 @@ describe("Cart endpoints", () => {
         agent
             .post("/api/v1/cart/95d5debf-a633-4ce9-b276-b4608bf23488")
             .set("Content-Type", "application/json")
-            .set("token", userToken)
+            .set("token", userToken)            
             .expect("Content-Type", /json/)
             .end((err, res) => {
                 if (err) throw err;

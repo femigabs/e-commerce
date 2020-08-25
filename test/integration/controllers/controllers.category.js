@@ -1,6 +1,7 @@
 import request from "supertest";
 import { expect } from "chai";
 import { app } from '../../../src/config';
+import { object } from "@hapi/joi";
 
 const agent = request(app);
 
@@ -23,9 +24,8 @@ describe("Category endpoints", () => {
             .expect("Content-Type", /json/)
             .end((err, res) => {
                 if (err) throw err;
-                expect(res.body.data).to.be.a("string");
                 expect(res.body.status).to.equal(200);
-                adminToken = res.body.data;
+                adminToken = res.body.data.token;
                 done();
             });
     });
@@ -50,17 +50,11 @@ describe("Category endpoints", () => {
         agent
             .get("/api/v1/category")
             .set("Content-Type", "application/json")
-            .set("token", adminToken)
             .expect("Content-Type", /json/)
             .end((err, res) => {
                 if (err) throw err;
                 expect(res.body.status).to.equal(200);
                 expect(res.body.message).to.equal("All Category fetched successfully.");
-                for (let item of res.body.data) {
-                    if (item.product_type === category.product_type) {
-                        fetchedCategory = item;
-                    }
-                }
                 done();
             });
     })

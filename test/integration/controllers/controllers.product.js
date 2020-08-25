@@ -1,13 +1,13 @@
 import request from "supertest";
 import { expect } from "chai";
 import { app } from '../../../src/config';
+import { object } from "@hapi/joi";
 
 const agent = request(app);
 
 describe("Product endpoints", () => {
     let adminToken;
     let id;
-    let fetchedCategory
     before((done) => {
         agent
             .post("/api/v1/auth/login")
@@ -19,9 +19,8 @@ describe("Product endpoints", () => {
             .expect("Content-Type", /json/)
             .end((err, res) => {
                 if (err) throw err;
-                expect(res.body.data).to.be.a("string");
                 expect(res.body.status).to.equal(200);
-                adminToken = res.body.data;
+                adminToken = res.body.data.token;
                 done();
             });
     });
