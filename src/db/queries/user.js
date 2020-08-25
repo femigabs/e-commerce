@@ -39,7 +39,7 @@ export default {
     SELECT * FROM users WHERE id=($1)
     `,
     findUserByCode: `
-    SELECT * FROM users WHERE verification_code=($1)
+    SELECT * FROM users WHERE verification_code=($1) AND id=($2)
     `,
     checkIfUserIsVerified: `
     SELECT * FROM users WHERE is_active=($1)

@@ -48,9 +48,10 @@ class UserMiddleware {
     }
 
     static async checkCode(req, res, next) {
-        const { verification_code } = req.body
+        const { verification_code } = req.body;
+        const { id } = req.query
         try {
-            const data = await UserServices.checkIfCodeExist(verification_code);
+            const data = await UserServices.checkIfCodeExist(verification_code, id);
             if (data) {
                 const is_active = data.is_active;
                 if (is_active) {
@@ -72,9 +73,10 @@ class UserMiddleware {
     }
 
     static async checkExpiry(req, res, next) {
-        const { verification_code } = req.body
+        const { verification_code } = req.body;
+        const { id } = req.query
         try {
-            const data = await UserServices.checkIfCodeExist(verification_code);
+            const data = await UserServices.checkIfCodeExist(verification_code, id);
             if (data) {
                 const code_expiry = data.verification_code_expiry;
                 if (moment().isAfter(code_expiry)) {
@@ -200,8 +202,9 @@ class UserMiddleware {
 
     static async checkResetCode(req, res, next) {
         const { verification_code } = req.body;
+        const { id } = req.query;
         try {
-            const data = await UserServices.checkIfCodeExist(verification_code);
+            const data = await UserServices.checkIfCodeExist(verification_code, id);
             if (data) {
                 const is_active = data.is_active;
                 if (is_active) {

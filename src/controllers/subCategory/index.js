@@ -1,5 +1,6 @@
 import { SubCategoryServices } from "../../services";
 import { Response } from '../../utils';
+import { client } from '../../config'
 
 class SubCategoryController {
 
@@ -8,65 +9,45 @@ class SubCategoryController {
         try {
             const newSubCategory = await SubCategoryServices.createSubCategory(category_id, req.body);
             return newSubCategory
-                ? Response.created(
-                    res,
-                    newSubCategory,
-                    "Sub Category created successfully."
-                )
-                : Response.badrequestError(
-                    res,
-                    "Error creating Sub Category."
-                )
-        } catch (e) {
-            return Response.serverError(
-                res,
-                "Internal Server Error."
-            )
+                ? Response.created(res, newSubCategory, "Sub Category created successfully.")
+                : Response.badrequestError(res, "Error creating Sub Category.")
+        } catch (error) {
+            return Response.serverError(res, "Internal Server Error.")
         }
     }
 
     static async getAllSubCategory(req, res) {
         try {
-            const allSubCategory = await SubCategoryServices.getAllSubCategory();
-
-            return allSubCategory
-                ? Response.ok(
-                    res,
-                    allSubCategory,
-                    "All Sub Category fetched successfully."
-                )
-                : Response.badrequestError(
-                    res,
-                    "Error fetching Sub Category."
-                )
-        } catch (e) {
-            return Response.serverError(
-                res,
-                "Internal Server Error."
-            )
+            client.get('allSubCategory', async (error, data) => {
+                if (data) {
+                    return Response.ok(res, JSON.parse(data), "All Sub Category fetched successfully.");
+                }
+                const allSubCategory = await SubCategoryServices.getAllSubCategory();
+                if (allSubCategory) {
+                    client.setex('allSubCategory', 300, JSON.stringify(allSubCategory));  /*  expires in five minute*/
+                }
+                return Response.badrequestError(res, "Error fetching Sub Category.");
+            })
+        } catch (error) {
+            return Response.serverError(res, "Internal Server Error.")
         }
     }
 
     static async getSubCategoryByCategoryId(req, res) {
         const { category_id } = req.params;
         try {
-            const subCategory = await SubCategoryServices.checkIfCategoryIdExist(category_id);
-
-            return subCategory
-                ? Response.ok(
-                    res,
-                    subCategory,
-                    "Sub Category fetched successfully."
-                )
-                : Response.badrequestError(
-                    res,
-                    "Error fetching Sub Category."
-                )
-        } catch (e) {
-            return Response.serverError(
-                res,
-                "Internal Server Error."
-            )
+            client.get(category_id, async (error, data) => {
+                if (data) {
+                    return Response.ok(res, JSON.parse(data), "Sub Category fetched successfully.");
+                }
+                const subCategory = await SubCategoryServices.checkIfCategoryIdExist(category_id);
+                if (subCategory) {
+                    client.setex(category_id, 300, JSON.stringify(subCategory));  /*  expires in five minute*/
+                }
+                return Response.badrequestError(res, "Error fetching Sub Category.");
+            })
+        } catch (error) {
+            return Response.serverError(res, "Internal Server Error.")
         }
     }
 
@@ -76,20 +57,10 @@ class SubCategoryController {
             const subCategory = await SubCategoryServices.deleteSubCategory(id);
 
             return subCategory
-                ? Response.ok(
-                    res,
-                    subCategory,
-                    'Sub Category deleted successfully'
-                )
-                : Response.badrequestError(
-                    res,
-                    'Error deleting Category'
-                )
-        } catch (e) {
-            return Response.serverError(
-                res,
-                "Internal Server Error."
-            )
+                ? Response.ok(res, subCategory, 'Sub Category deleted successfully')
+                : Response.badrequestError(res, 'Error deleting Category')
+        } catch (error) {
+            return Response.serverError(res, "Internal Server Error.")
         }
     }
 
@@ -99,15 +70,8 @@ class SubCategoryController {
             const subCategory = await SubCategoryServices.updateSubCategory(id, req.body);
 
             return subCategory
-                ? Response.ok(
-                    res,
-                    subCategory,
-                    'Sub Category updated successfully'
-                )
-                : Response.badrequestError(
-                    res,
-                    'Error updating Sub Category'
-                )
+                ? Response.ok(res, {}, 'Sub Category updated successfully')
+                : Response.badrequestError(res, 'Error updating Sub Category')
         } catch (e) {
             return Response.serverError(
                 res,

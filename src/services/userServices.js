@@ -33,8 +33,8 @@ class UserServices {
         return db.oneOrNone(userQuery.findUserById, [id]);
     }
 
-    static async checkIfCodeExist(verification_code) {
-        return db.oneOrNone(userQuery.findUserByCode, [verification_code]);
+    static async checkIfCodeExist(verification_code, id) {
+        return db.oneOrNone(userQuery.findUserByCode, [verification_code, id]);
     }
 
     static async checkIfUserIsVerified(is_active = true) {

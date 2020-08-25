@@ -11,22 +11,17 @@ class UserController {
         try {
             const newUser = await UserServices.createUser(req.body);
             await MailMiddleware.sendVerificationMail(newUser.email, newUser.verification_code, newUser.id, newUser.first_name, newUser.last_name)
-
+            const data = {
+                id: newUser.id,
+                first_name: newUser.first_name,
+                last_name: newUser.last_name,
+                created_at: newUser.created_at
+            }
             return newUser
-                ? Response.created(
-                    res,
-                    newUser,
-                    "User created successfully."
-                )
-                : Response.badrequestError(
-                    res,
-                    "Error creating User."
-                )
+                ? Response.created(res, data, "User created succesfully.")
+                : Response.badrequestError(res, "Error creating User.")
         } catch (error) {
-            return Response.serverError(
-                res,
-                "Internal Server Error."
-            )
+            return Response.serverError(res, "Internal Server Error.")
         }
     }
 
@@ -37,15 +32,8 @@ class UserController {
             await MailMiddleware.resendVerificationCodeMail(user[0].email, user[0].verification_code, user[0].id, user[0].first_name, user[0].last_name)
 
             return user
-                ? Response.ok(
-                    res,
-                    user,
-                    'Verification code update successfully'
-                )
-                : Response.badrequestError(
-                    res,
-                    'Error Updating verification code.'
-                );
+                ? Response.ok(res, {}, 'Verification code update successfully')
+                : Response.badrequestError(res, 'Error Updating verification code.');
         } catch (error) {
             return Response.serverError(res, 'Internal Server Error.');
         }
@@ -59,15 +47,8 @@ class UserController {
             await MailMiddleware.sendVerificationSuccessfulMail(user[0].email, user[0].first_name, user[0].last_name);
 
             return user
-                ? Response.ok(
-                    res,
-                    user,
-                    'Verification successful'
-                )
-                : Response.badrequestError(
-                    res,
-                    'Error Verifying User.'
-                );
+                ? Response.ok(res, {}, 'Verification successful')
+                : Response.badrequestError(res, 'Error Verifying User.');
         } catch (error) {
             return Response.serverError(res, 'Internal Server Error.');
         }
@@ -75,16 +56,20 @@ class UserController {
 
     static async login(req, res) {
         try {
+            const { email } = req.body;
+            const user = await UserServices.checkIfUserExist(email)
             if (req.password) {
                 const token = Hash.generateToken(
                     req.user.first_name,
                     req.user.email
                 );
-                return Response.ok(
-                    res,
-                    token,
-                    'User login successfully.'
-                );
+                const data = {
+                    id: user.id,
+                    first_name: user.first_name,
+                    last_name: user.last_name,
+                    token: token
+                }
+                return Response.ok(res, data, 'User login successfully.');
             }
             return Response.unauthorizedError(res, 'Invalid Password');
         } catch (e) {
@@ -100,15 +85,8 @@ class UserController {
             const user = await UserServices.updateVerificationCode(id);
             await MailMiddleware.resetPasswordMail(user[0].email, user[0].verification_code, user[0].id);
             return user
-                ? Response.ok(
-                    res,
-                    user,
-                    'Reset link sent successfully.'
-                )
-                : Response.badrequestError(
-                    res,
-                    'Error Sending Reset link.'
-                );
+                ? Response.ok(res, {}, 'Reset link sent successfully.')
+                : Response.badrequestError(res, 'Error Sending Reset link.');
 
         } catch (error) {
             return Response.serverError(res, 'Internal Server Error.');
@@ -123,15 +101,8 @@ class UserController {
             await MailMiddleware.sendresetSuccessfulMail(user[0].email, user[0].first_name, user[0].last_name)
 
             return user
-                ? Response.ok(
-                    res,
-                    user,
-                    'Password reset successful'
-                )
-                : Response.badrequestError(
-                    res,
-                    'Error resetting User.'
-                );
+                ? Response.ok(res, {}, 'Password reset successful')
+                : Response.badrequestError(res, 'Error resetting User.');
 
         } catch (error) {
             return Response.serverError(res, 'Internal Server Error.');
