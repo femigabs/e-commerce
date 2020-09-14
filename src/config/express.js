@@ -30,15 +30,7 @@ app.use(passport.session());
 app.use(cors());
 
 app.get('/', (req, res) => {
-    client.ping((err, msg) => {
-        if (err) {
-            return Response.serverError(
-                res,
-                "Internal Server Error."
-            )
-        }
-        res.status(200).send(res.body)
-    });
+    res.send('Welcome to e_commerce');
 });
 
 router(app);

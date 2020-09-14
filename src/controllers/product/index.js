@@ -22,16 +22,16 @@ class ProductController {
 
     static async getAllProduct(req, res) {
         try {
-            client.get('allProduct', async (error, data) => {
-                if (data) {
-                    return Response.ok(res, JSON.parse(data), "All Product fetched successfully.");
-                }
-                const allProduct = await ProductServices.getAllProduct();
-                if (allProduct) {
-                    client.setex('allProduct', 300, JSON.stringify(allProduct));  /*  expires in five minute*/
-                }
-                return Response.badrequestError(res, "Error fetching Product.");
-            })
+            const allProduct = await ProductServices.getAllProduct();
+            if (allProduct) {
+                client.setex('allProduct', 300, JSON.stringify(allProduct));  /*  expires in five minute*/
+                client.get('allProduct', async (error, data) => {
+                    if (data) {
+                        return Response.ok(res, JSON.parse(data), "All Product fetched successfully.");
+                    }
+                    return Response.badrequestError(res, "Error fetching Product.");
+                })
+            }
         } catch (error) {
             return Response.serverError(res, "Internal Server Error.")
         }
@@ -54,16 +54,16 @@ class ProductController {
     static async getProductBySubCategoryId(req, res) {
         const { sub_category_id } = req.params;
         try {
-            client.get(sub_category_id, async (error, data) => {
-                if (data) {
-                    return Response.ok(res, JSON.parse(data), "Product fetched successfully.");
-                }
-                const product = await ProductServices.checkIfSubCategoryIdExist(sub_category_id);
-                if (product) {
-                    client.setex(sub_category_id, 300, JSON.stringify(product));  /*  expires in five minute*/
-                }
-                return Response.badrequestError(res, "Error fetching Product.");
-            })
+            const product = await ProductServices.checkIfSubCategoryIdExist(sub_category_id);
+            if (product) {
+                client.setex(sub_category_id, 300, JSON.stringify(product));  /*  expires in five minute*/
+                client.get(sub_category_id, async (error, data) => {
+                    if (data) {
+                        return Response.ok(res, JSON.parse(data), "Product fetched successfully.");
+                    }
+                    return Response.badrequestError(res, "Error fetching Product.");
+                })
+            }
         } catch (error) {
             return Response.serverError(res, "Internal Server Error.")
         }
