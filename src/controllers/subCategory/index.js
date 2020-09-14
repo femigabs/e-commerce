@@ -18,16 +18,16 @@ class SubCategoryController {
 
     static async getAllSubCategory(req, res) {
         try {
-            client.get('allSubCategory', async (error, data) => {
-                if (data) {
-                    return Response.ok(res, JSON.parse(data), "All Sub Category fetched successfully.");
-                }
-                const allSubCategory = await SubCategoryServices.getAllSubCategory();
-                if (allSubCategory) {
-                    client.setex('allSubCategory', 300, JSON.stringify(allSubCategory));  /*  expires in five minute*/
-                }
-                return Response.badrequestError(res, "Error fetching Sub Category.");
-            })
+            const allSubCategory = await SubCategoryServices.getAllSubCategory();
+            if (allSubCategory) {
+                client.setex('allSubCategory', 300, JSON.stringify(allSubCategory));  /*  expires in five minute*/
+                client.get('allSubCategory', async (error, data) => {
+                    if (data) {
+                        return Response.ok(res, JSON.parse(data), "All Sub Category fetched successfully.");
+                    }
+                    return Response.badrequestError(res, "Error fetching Sub Category.");
+                })
+            }
         } catch (error) {
             return Response.serverError(res, "Internal Server Error.")
         }
@@ -36,16 +36,16 @@ class SubCategoryController {
     static async getSubCategoryByCategoryId(req, res) {
         const { category_id } = req.params;
         try {
-            client.get(category_id, async (error, data) => {
-                if (data) {
-                    return Response.ok(res, JSON.parse(data), "Sub Category fetched successfully.");
-                }
-                const subCategory = await SubCategoryServices.checkIfCategoryIdExist(category_id);
-                if (subCategory) {
-                    client.setex(category_id, 300, JSON.stringify(subCategory));  /*  expires in five minute*/
-                }
-                return Response.badrequestError(res, "Error fetching Sub Category.");
-            })
+            const subCategory = await SubCategoryServices.checkIfCategoryIdExist(category_id);
+            if (subCategory) {
+                client.setex(category_id, 300, JSON.stringify(subCategory));  /*  expires in five minute*/
+                client.get(category_id, async (error, data) => {
+                    if (data) {
+                        return Response.ok(res, JSON.parse(data), "Sub Category fetched successfully.");
+                    }
+                    return Response.badrequestError(res, "Error fetching Sub Category.");
+                })
+            }
         } catch (error) {
             return Response.serverError(res, "Internal Server Error.")
         }

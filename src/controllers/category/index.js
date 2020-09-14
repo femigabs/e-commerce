@@ -22,16 +22,16 @@ class CategoryController {
 
     static async getAllCategory(req, res) {
         try {
-            client.get('allCategory', async(error, data) => {
-                if (data) {
-                    return Response.ok(res, JSON.parse(data), "All Category fetched successfully.");
-                }
-                const allCategory = await CategoryServices.getAllCategory();
-                if (allCategory) {
-                    client.setex('allCategory', 300, JSON.stringify(allCategory));  /*  expires in five minute*/
-                }
-                return Response.badrequestError(res, "Error fetching Category.");
-            })
+            const allCategory = await CategoryServices.getAllCategory();
+            if (allCategory) {
+                client.setex('allCategory', 300, JSON.stringify(allCategory));  /*  expires in five minute*/
+                client.get('allCategory', async (error, data) => {
+                    if (data) {
+                        return Response.ok(res, JSON.parse(data), "All Category fetched successfully.");
+                    }
+                    return Response.badrequestError(res, "Error fetching Category.");
+                })
+            }
         } catch (error) {
             return Response.serverError(res, "Internal Server Error.")
         }
