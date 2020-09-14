@@ -23,16 +23,10 @@ class SubCategoryMiddleware {
 
             const data = await SubCategoryServices.checkIfSubCategoryExist(product_sub_category);
             if (data) {
-                return Response.conflictError(
-                    res,
-                    "Sub Category already exist"
-                )
+                return Response.conflictError(res, "Sub Category already exist")
             }
-        } catch (e) {
-            return Response.serverError(
-                res,
-                "Internal server error"
-            )
+        } catch (error) {
+            return Response.serverError(res, "Internal server error")
         }
         next();
     }

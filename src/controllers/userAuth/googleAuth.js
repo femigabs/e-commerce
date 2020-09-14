@@ -23,7 +23,6 @@ passport.use(
             callbackURL: process.env.GOOGLE_CALLBACK_URL
         },
         (async (accesToken, refreshToken, profile, done) => {
-            console.log(profile)
             try {
                 const { email, given_name, family_name } = profile._json
                 const user = await UserServices.checkIfUserExist(email);
@@ -37,8 +36,7 @@ passport.use(
                 const payload = [id, given_name, family_name, email, password, salt, is_active];
                 const newUser = await db.any(userQuery.createAuthUser, payload);
                 return done(null, newUser[0])
-            } catch (e) {
-                console.log(e)
+            } catch (error) {
                 return done(error);
             }
         })

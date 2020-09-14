@@ -9,71 +9,66 @@ class CartController {
             const { product_id } = req.params;
             const user = await UserServices.checkIfUserExist(email);
             const user_id = user.id;
-            const product = await ProductServices.checkIfProductIdExist(product_id);            
-            const newCart = await CartServices.createCart(user_id, product[0].id, product[0].price, product[0].price);
-            return newCart
-                ? Response.created(
-                    res,
-                    newCart,
-                    "Cart created successfully."
-                )
-                : Response.badrequestError(
-                    res,
-                    "Error creating Cart"
-                )
+            const product = await ProductServices.checkIfProductIdExist(product_id);
+            const cart = await CartServices.getCartByUserId(user_id)
+            if (cart.length === 0) {
+                const cart = await CartServices.createCart(user_id)
+                const cartProduct = await CartServices.createCartProduct(cart.id, product[0].id, product[0].price, product[0].price)
+                return Response.created(res, cartProduct, "Cart added successfully.")
+            } else if (cart.length > 0) {
+                const cartProduct = await CartServices.createCartProduct(cart[0].id, product[0].id, product[0].price, product[0].price)
+                return Response.created(res, cartProduct, "Cart added successfully.")
+            }
+            return Response.badrequestError(res, "Error creating Cart")
         } catch (error) {
-            return Response.serverError(
-                res,
-                "Internal Server Error."
-            )
+            return Response.serverError(res, "Internal Server Error.")
         }
     }
 
-    static async getCartByUserId(req, res) {
+    static async getCartProduct(req, res) {
         const { email } = res.locals.user;
         try {
             const user = await UserServices.checkIfUserExist(email);
             const user_id = user.id;
             const cart = await CartServices.getCartByUserId(user_id)
+            const cartProduct = await CartServices.getCartProductByCartId(cart[0].id)
 
-            return cart
-                ? Response.ok(
-                    res,
-                    cart,
-                    "Cart fetched successfully."
-                )
-                : Response.badrequestError(
-                    res,
-                    "Error fetching Cart."
-                )
+            return cartProduct
+                ? Response.ok(res, cartProduct, 'Cart fetched successfully')
+                : Response.badrequestError(res, 'Error fetching Cart')
         } catch (error) {
-            return Response.serverError(
-                res,
-                "Internal Server Error."
-            )
+            return Response.serverError(res, "Internal Server Error.")
         }
     }
 
     static async deleteCart(req, res) {
+        const { email } = res.locals.user;
+        try {
+            const user = await UserServices.checkIfUserExist(email);
+            const user_id = user.id;
+            const carts = await CartServices.getCartByUserId(user_id);
+            if (carts.length > 0) {
+                const cart = await CartServices.deleteCart(carts[0].id);
+                return Response.ok(res, cart, 'Cart deleted successfully')
+            } else if (cart.length === 0) {
+                return Response.badrequestError(res, 'Cart is empty')
+            }
+        } catch (error) {
+            return Response.serverError(res, "Internal Server Error.")
+        }
+    }
+
+    static async deleteCartProduct(req, res) {
         try {
             const { id } = req.params;
-            const cart = await CartServices.deleteCart(id);
+            const cart = await CartServices.deleteCartProduct(id);
 
             return cart
-                ? Response.ok(
-                    res,
-                    cart,
-                    'Cart deleted successfully'
-                )
-                : Response.badrequestError(
-                    res,
-                    'Error deleting Cart'
-                )
-        } catch (e) {
-            return Response.serverError(
-                res,
-                "Internal Server Error."
-            )
+                ? Response.ok(res, cart, 'Cart Product deleted successfully')
+                : Response.badrequestError(res, 'Error deleting Cart Product')
+        } catch (error) {
+            console.log("CartController -> deleteCartProduct -> error", error)
+            return Response.serverError(res, "Internal Server Error.")
         }
     }
 
@@ -81,25 +76,28 @@ class CartController {
         try {
             const { id } = req.params;
             const cart = await CartServices.updateCart(id, req.body);
-
             return cart
-                ? Response.ok(
-                    res,
-                    cart,
-                    'Cart updated successfully'
-                )
-                : Response.badrequestError(
-                    res,
-                    'Error updating Category'
-                )
+                ? Response.ok(res, cart, 'Cart updated successfully')
+                : Response.badrequestError(res, 'Error updating Category')
         } catch (error) {
-            return Response.serverError(
-                res,
-                "Internal Server Error."
-            )
+            return Response.serverError(res, "Internal Server Error.")
         }
     }
 
+    static async sumSubTotal(req, res) {
+        const { email } = res.locals.user;
+        try {
+            const user = await UserServices.checkIfUserExist(email);
+            const user_id = user.id;
+            const cart = await CartServices.getCartByUserId(user_id)
+            const total = await CartServices.sumSubTotal(cart[0].id)
+            return total
+                ? Response.ok(res, total, 'SubTotal summed successfully')
+                : Response.badrequestError(res, 'Error summing SubTotal')
+        } catch (error) {
+            return Response.serverError(res, "Internal Server Error.")
+        }
+    }
 }
 
 export default CartController;

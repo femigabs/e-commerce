@@ -23,8 +23,8 @@ class UploadServices {
                 .then((result) => result)
                 .catch((err) => err);
             return image
-        } catch (e) {
-            return e
+        } catch (error) {
+            return error
         }
     }
 }

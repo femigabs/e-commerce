@@ -28,5 +28,10 @@ export default {
     updateProduct: `
         UPDATE product SET product_name=($1), description=($2), quantity=($3), price=($4), product_image=($5), updated_at= now() WHERE id=($6) RETURNING *
     `,
-
+    checkProductStatus: `
+        SELECT status, quantity FROM product WHERE id=($1)
+    `,
+    updateProductStatusAndQuantity: `
+        UPDATE product SET quantity=($1), status=($2), updated_at= now() WHERE id=($3)
+    `
 }

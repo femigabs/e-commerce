@@ -74,7 +74,7 @@ class UserController {
                 return Response.ok(res, data, 'User login successfully.');
             }
             return Response.unauthorizedError(res, 'Invalid Password');
-        } catch (e) {
+        } catch (error) {
             return Response.serverError(res, 'Internal Server Error.');
         }
     };

@@ -26,7 +26,7 @@ const schema = {
             new RegExp(
                 '^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.{6,})'
             )
-        ),
+        )
     }),
 
     idparam: Joi.number().required(),

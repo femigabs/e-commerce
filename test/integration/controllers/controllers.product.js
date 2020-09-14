@@ -43,7 +43,7 @@ describe("Product endpoints", () => {
             });
     })
 
-    it("GET ALL /api/v1/subcategory/product", function (done) {
+    it.skip("GET ALL /api/v1/subcategory/product", function (done) {
         agent
             .get("/api/v1/subcategory/product")
             .set("Content-Type", "application/json")
@@ -56,7 +56,7 @@ describe("Product endpoints", () => {
             });
     })
 
-    it("GET /api/v1/subcategory/product", function (done) {
+    it.skip("GET /api/v1/subcategory/product", function (done) {
         agent
             .get("/api/v1/subcategory/product/6cb1ab80-929f-425b-a634-033aa5912b04")
             .set("Content-Type", "application/json")
