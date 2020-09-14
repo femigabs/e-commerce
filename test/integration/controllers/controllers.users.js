@@ -97,7 +97,6 @@ describe("User endpoints", () => {
             .set("Content-Type", "application/json")
             .expect("Content-Type", /json/)
             .end((err, res) => {
-            console.log("err", err, res.body)
                 if (err) throw err;
                 expect(res.body.status).to.equal(200);
                 expect(res.body.message).to.equal("Reset link sent successfully.");

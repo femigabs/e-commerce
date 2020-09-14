@@ -3,21 +3,27 @@ import { v4 as uuidv4 } from 'uuid';
 
 class TransactionServices {
 
-    static async createTransaction(order_id,  body) {
+    static async createTransaction(user_id, body) {
+        const id = uuidv4();
+        const payment_id = body.id
         const payload = [
-            body.id,
-            body.order_id,
+            id,
+            user_id,
+            payment_id,
             body.reference,
             body.amount,
             body.status,
-            body.currency,
+            body.currency
         ];
-
         return db.oneOrNone(transactionQuery.createTransaction, payload)
     }
 
     static async verifyTransaction(status, reference) {
         return db.oneOrNone(transactionQuery.verifyTransaction, [status, reference])
+    }
+
+    static async checkIfCategoryIdExist(reference) {
+        return db.oneOrNone(transactionQuery.getTransactionByReference, [reference])
     }
 }
 

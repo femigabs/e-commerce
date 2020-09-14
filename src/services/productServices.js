@@ -47,6 +47,14 @@ class ProductServices {
     
         return db.manyOrNone(productQuery.updateProduct, payload);
     }
+
+    static async checkProductStatusAndQuantity(id) {
+        return db.oneOrNone(productQuery.checkProductStatus, [id]);
+    }
+
+    static async updateProductStatusAndQuantity(quantity, status, id) {
+        return db.oneOrNone(productQuery.updateProductStatusAndQuantity, [quantity, status, id]);
+    }
 }
 
 export default ProductServices;

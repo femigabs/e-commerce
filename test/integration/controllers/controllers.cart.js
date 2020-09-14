@@ -20,7 +20,7 @@ describe("Cart endpoints", () => {
             .expect("Content-Type", /json/)
             .end((err, res) => {
                 if (err) throw err;
-                expect(res.body.status).to.equal(200);
+                expect(res.body.message).to.equal("User login successfully.");
                 userToken = res.body.data.token;            
                 done();
             });
@@ -35,7 +35,7 @@ describe("Cart endpoints", () => {
             .end((err, res) => {
                 if (err) throw err;
                 expect(res.body.status).to.equal(201);
-                expect(res.body.message).to.equal("Cart created successfully.");
+                expect(res.body.message).to.equal("Cart added successfully.");
                 id = res.body.data.id;
                 done();
             });
@@ -50,7 +50,21 @@ describe("Cart endpoints", () => {
             .end((err, res) => {
                 if (err) throw err;
                 expect(res.body.status).to.equal(200);
-                expect(res.body.message).to.equal("Cart fetched successfully.");
+                expect(res.body.message).to.equal("Cart fetched successfully");
+                done();
+            });
+    })
+
+    it("GET /api/v1/cart/total", function (done) {
+        agent
+            .get("/api/v1/cart/total")
+            .set("Content-Type", "application/json")
+            .set("token", userToken)
+            .expect("Content-Type", /json/)
+            .end((err, res) => {
+                if (err) throw err;
+                expect(res.body.status).to.equal(200);
+                expect(res.body.message).to.equal("SubTotal summed successfully");
                 done();
             });
     })
@@ -75,6 +89,20 @@ describe("Cart endpoints", () => {
     it("DELETE /api/v1/cart", function (done) {
         agent
             .delete(`/api/v1/cart/${id}`)
+            .set("Content-Type", "application/json")
+            .set("token", userToken)
+            .expect("Content-Type", /json/)
+            .end((err, res) => {
+                if (err) throw err;
+                expect(res.body.status).to.equal(200);
+                expect(res.body.message).to.equal("Cart Product deleted successfully");
+                done();
+            });
+    })
+
+    it("DELETE /api/v1/cart", function (done) {
+        agent
+            .delete('/api/v1/cart')
             .set("Content-Type", "application/json")
             .set("token", userToken)
             .expect("Content-Type", /json/)

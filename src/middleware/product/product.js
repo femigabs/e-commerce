@@ -8,6 +8,7 @@ class ProductMiddleware {
             await Validate.schema.product.validateAsync(req.body);
             next();
         } catch (error) {
+            console.log("ProductMiddleware -> createMiddleWare -> error", error)
             return res.status(400).json({
                 error: error.details[0].message.replace(
                     /[\"]/gi,
@@ -23,16 +24,11 @@ class ProductMiddleware {
 
             const data = await ProductServices.checkIfProductExist(product_name);
             if (data) {
-                return Response.conflictError(
-                    res,
-                    "Product already exist"
-                )
+                return Response.conflictError(res, "Product already exist")
             }
-        } catch (e) {
-            return Response.serverError(
-                res,
-                "Internal server error"
-            )
+        } catch (error) {
+            console.log("ProductMiddleware -> product -> error", error)
+            return Response.serverError(res, "Internal server error")
         }
         next();
     }

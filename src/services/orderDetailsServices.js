@@ -3,12 +3,12 @@ import { v4 as uuidv4 } from 'uuid';
 
 class OrderServices {
 
-    static async createOrderDetails(user_id, body) {
+    static async createOrderDetails(user_id, body, is_default) {
         const id = uuidv4();
         const { first_name, last_name, address, state, city, phone_number } = body;
         const firstName = first_name.charAt(0).toUpperCase() + first_name.slice(1);
         const lastName = last_name.charAt(0).toUpperCase() + last_name.slice(1); 
-        const payload = [id, user_id, firstName, lastName, address, state, city, phone_number];
+        const payload = [id, user_id, firstName, lastName, address, state, city, phone_number, is_default];
 
         return db.oneOrNone(orderQuery.createOrderDetails, payload)
     }
@@ -32,6 +32,15 @@ class OrderServices {
 
         return db.manyOrNone(orderQuery.updateOrderDetails, payload);
     }
+
+    static async setDefaultAddress(id) {
+        return db.oneOrNone(orderQuery.setDefaultAddress, [id]);
+    }
+
+    static async resetAddress(user_id) {
+        return db.manyOrNone(orderQuery.resetAddress, [user_id]);
+    }
+
 }
 
 export default OrderServices;

@@ -24,16 +24,10 @@ class UserMiddleware {
             const data = await UserServices.checkIfUserExist(email);
 
             if (data) {
-                return Response.conflictError(
-                    res,
-                    "User already exist"
-                )
+                return Response.conflictError(res, "User already exist")
             }
         } catch (error) {
-            return Response.serverError(
-                res,
-                "Internal server error"
-            )
+            return Response.serverError(res, "Internal server error")
         }
         next();
     }
@@ -161,11 +155,8 @@ class UserMiddleware {
             res.locals.user = req.user;
             next();
 
-        } catch (e) {
-            return Response.serverError(
-                res,
-                'Internal server error'
-            )
+        } catch (error) {
+            return Response.serverError(res,'Internal server error')
         }
     }
 
@@ -178,11 +169,8 @@ class UserMiddleware {
                 return next();
             }
             return Response.forbiddenError(res, 'This User is not Authorized')
-        } catch (e) {
-            return Response.serverError(
-                res,
-                'Internal server error'
-            )
+        } catch (error) {
+            return Response.serverError(res, 'Internal server error')
         }
     }
 
@@ -213,14 +201,9 @@ class UserMiddleware {
             } 
             return Response.notFoundError(res, 'Account is not verified, Please verify account');
         } catch (error) {
-            return Response.serverError(
-                res,
-                "Internal server error"
-            )
+            return Response.serverError(res,"Internal server error")
         }
     };
-
-
 
 }
 

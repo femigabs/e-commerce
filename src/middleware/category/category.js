@@ -28,11 +28,8 @@ class CategoryMiddleware {
                     "Category already exist"
                 )
             }
-        } catch (e) {
-            return Response.serverError(
-                res,
-                "Internal server error"
-            )
+        } catch (error) {
+            return Response.serverError(res, "Internal server error")
         }
         next();
     }

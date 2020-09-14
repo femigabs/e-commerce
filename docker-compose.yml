@@ -23,7 +23,7 @@ services:
       - /usr/src/app
     links:
         - redis
-    command: ["bash", "-c","while !</dev/tcp/db/5432; do sleep 1; done; npm run devstart"]
+    command: ["bash", "-c","while !</dev/tcp/db/5431; do sleep 1; done; npm run devstart"]
     environment:
       - ECOMMERCE_NODE_ENV=development
       - REDIS_URL=redis://cache

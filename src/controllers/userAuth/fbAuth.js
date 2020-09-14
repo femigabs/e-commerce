@@ -24,7 +24,6 @@ passport.use(
             profileFields: ['id', 'first_name', 'last_name', 'email']
         },
         (async (accesToken, refreshToken, profile, done) => {
-            console.log(profile)
             try {
                 const { email, first_name, last_name } = profile._json;
                 const user = await UserServices.checkIfUserExist(email);
@@ -38,8 +37,7 @@ passport.use(
                 const payload = [id, first_name, last_name, email, password, salt, is_active];
                 const newUser = await db.any(userQuery.createAuthUser, payload);
                 return done(null, newUser[0])
-            } catch (e) {
-                console.log('aaa', e)
+            } catch (error) {
                 return done(error);
             }
         })

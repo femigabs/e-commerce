@@ -2,14 +2,18 @@ export default {
     createTransaction: `
         INSERT INTO transaction(
             id,
-            order_id,
+            user_id,
+            payment_id,
             reference,
             amount,
             status,
             currency
-        ) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *
+        ) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *
     `,
     verifyTransaction: `
-        update transaction set verified=($1) where reference = ($2)
+        update transaction set verified=($1), updated_at= now() where reference=($2)
     `,
+    getTransactionByReference: `
+       SELECT * FROM transaction WHERE reference= ($1)
+    `
 }

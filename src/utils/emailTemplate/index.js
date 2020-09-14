@@ -47,7 +47,7 @@ const templates = {
                                     <div style="width: 200px; height: 1px; background-color: #E4E4E4; margin-bottom: 25px;">
                                     </div>
                                     <h3 style="color: #455065; font-weight: 300; font-size: 17px; line-height: 23px; margin-bottom: 20px;">Follow
-                                        this link to <a href="http://localhost:3002/api/v1/auth/confirmation?id=${id}"
+                                        this link to <a href="http://localhost:3000/account/verification?id=${id}"
                                             style="color: #047558; text-decoration:underline;">Verify Email</a>
                                     </h3>
                                     <h4 style="color: #455065; font-weight: 300; font-size: 17px; line-height: 23px;">Please note that this code expires in 10 minutes</h4>

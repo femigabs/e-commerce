@@ -16,6 +16,7 @@ class ProductController {
                 ? Response.created(res, newProduct, "Product created successfully.")
                 : Response.badrequestError(res, "Error creating Product.")
         } catch (error) {
+            console.log("ProductController -> createProduct -> error", error)
             return Response.serverError(res, "Internal Server Error.")
         }
     }

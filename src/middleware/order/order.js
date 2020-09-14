@@ -1,5 +1,5 @@
 import { Validate, Response } from "../../utils";
-import { OrderServices } from "../../services";
+import { OrderDetailsServices } from "../../services";
 
 class OrderMiddleware {
 
@@ -19,7 +19,7 @@ class OrderMiddleware {
 
     static async checkOrderDetailsId(req, res, next) {
         const { id } = req.params;
-        const orderId = await OrderServices.checkIfOrderDetailsIdExist(id);
+        const orderId = await OrderDetailsServices.checkIfOrderDetailsIdExist(id);
         if (orderId) {
             return next();
         }
