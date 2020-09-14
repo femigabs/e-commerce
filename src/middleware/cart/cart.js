@@ -32,7 +32,6 @@ class CartMiddleware {
                 return Response.conflictError(res, "Product already exist in Cart")
             }
         } catch (error) {
-            console.log("CartMiddleware -> cart -> error", error, res.body.data)
             return Response.serverError(res, "Internal server error")
         }
         next();
