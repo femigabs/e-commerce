@@ -8,7 +8,6 @@ class ProductMiddleware {
             await Validate.schema.product.validateAsync(req.body);
             next();
         } catch (error) {
-            console.log("ProductMiddleware -> createMiddleWare -> error", error)
             return res.status(400).json({
                 error: error.details[0].message.replace(
                     /[\"]/gi,
@@ -27,7 +26,6 @@ class ProductMiddleware {
                 return Response.conflictError(res, "Product already exist")
             }
         } catch (error) {
-            console.log("ProductMiddleware -> product -> error", error)
             return Response.serverError(res, "Internal server error")
         }
         next();

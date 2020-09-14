@@ -21,4 +21,4 @@ after_success:
   - npm run coverage
 env:
   global:
-    CC_TEST_REPORTER_ID=9da5e9efde1962e57dbb2a42fa661b1c77ae797093dd964d46e06d83a4447d3e
+    CC_TEST_REPORTER_ID=67f141ed472cead3bc3914236ebc8b78532b1da9aa5a5bf89141e33b960324bc

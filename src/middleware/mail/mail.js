@@ -12,7 +12,6 @@ class MailMiddleware {
 
         try {
             const response = await this.sendMailTemplate(data)
-            console.log(response);
             return Promise.resolve(response)
         } catch (error) {
             return Promise.reject(error)

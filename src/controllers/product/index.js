@@ -16,7 +16,6 @@ class ProductController {
                 ? Response.created(res, newProduct, "Product created successfully.")
                 : Response.badrequestError(res, "Error creating Product.")
         } catch (error) {
-            console.log("ProductController -> createProduct -> error", error)
             return Response.serverError(res, "Internal Server Error.")
         }
     }
@@ -41,9 +40,11 @@ class ProductController {
     static async searchProduct(req, res) {
         try {
             const product = await ProductServices.searchProduct(req.body);
-            return product
-                ? Response.ok(res, product, "Product fetched successfully.")
-                : Response.badrequestError(res, "Error fetching Product.")
+            if (product.length > 0) {
+                return Response.ok(res, product, "Product fetched successfully.")
+            } else if (product.length === 0) {
+                return Response.badrequestError(res, "No such product")
+            }
         } catch (error) {
             return Response.serverError(res, "Internal Server Error."
             )

@@ -110,7 +110,6 @@ class TransactionController {
             const { data } = refund.data;
             return res.json(data)
         } catch (error) {
-            console.log("TransactionController -> refundPayment -> error", error)
             return Response.serverError(res, "Internal Server Error.")
         }
     }
