@@ -46,7 +46,7 @@ describe("Category endpoints", () => {
             });
     })
 
-    it("GET /api/v1/category", function (done) {
+    it.skip("GET /api/v1/category", function (done) {
         agent
             .get("/api/v1/category")
             .set("Content-Type", "application/json")
