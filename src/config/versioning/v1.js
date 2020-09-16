@@ -13,7 +13,7 @@ const api = Router();
 api.use("/auth", users);
 api.use("/auth", userRouter);
 api.use("/category", category);
-api.use("/category/sub", subCategory);
+api.use("/category", subCategory);
 api.use("/", product);
 api.use("/cart", cart);
 api.use("/", orderDetails);

@@ -4,11 +4,11 @@ import { SubCategoryController } from "../controllers"
 
 const router = new Router();
 
-router.post("/:category_id", UserMiddleware.verifyToken, UserMiddleware.adminAuth, SubCategoryMiddleware.createMiddleWare, SubCategoryMiddleware.subCategory, SubCategoryController.createSubCategory);
-//router.get("/:category_id", SubCategoryController.getSubCategoryByCategoryId);
-router.get("/:category_id", SubCategoryController.getProductSubCategoryByCategoryId);
-router.get("/", SubCategoryController.getAllSubCategory);
-router.delete("/:id", UserMiddleware.verifyToken, UserMiddleware.adminAuth, SubCategoryMiddleware.checkSubCategoryId, SubCategoryController.deleteSubCategory);
-router.put("/:id", UserMiddleware.verifyToken, UserMiddleware.adminAuth, SubCategoryController.updateSubCategory)
+router.post("/sub/:category_id", UserMiddleware.verifyToken, UserMiddleware.adminAuth, SubCategoryMiddleware.createMiddleWare, SubCategoryMiddleware.subCategory, SubCategoryController.createSubCategory);
+router.get("/sub/:category_id", SubCategoryController.getSubCategoryByCategoryId);
+router.get("/subname/:category_id", SubCategoryController.getProductSubCategoryByCategoryId);
+router.get("/sub", SubCategoryController.getAllSubCategory);
+router.delete("/sub/:id", UserMiddleware.verifyToken, UserMiddleware.adminAuth, SubCategoryMiddleware.checkSubCategoryId, SubCategoryController.deleteSubCategory);
+router.put("/sub/:id", UserMiddleware.verifyToken, UserMiddleware.adminAuth, SubCategoryController.updateSubCategory)
 
 export default router;
