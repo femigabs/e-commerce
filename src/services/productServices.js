@@ -3,11 +3,11 @@ import { v4 as uuidv4 } from 'uuid';
 
 class ProductServices {
 
-    static async createProduct(sub_category_id, body) {
+    static async createProduct(product_sub_category,  body) {
         const id = uuidv4();
         const { product_name, description, quantity, price, product_image } = body;
         const name = product_name.charAt(0).toUpperCase() + product_name.slice(1);
-        const payload = [id, sub_category_id, name, description, quantity, price, product_image ];
+        const payload = [id, product_sub_category, name, description, quantity, price, product_image ];
 
         return db.oneOrNone(productQuery.createProduct, payload);
     }
@@ -34,6 +34,10 @@ class ProductServices {
 
     static async checkIfSubCategoryIdExist(sub_category_id) {
         return db.manyOrNone(productQuery.getProductBySubCategoryId, [sub_category_id])
+    }
+
+    static async checkIfSubCategoryExist(product_sub_category) {
+        return db.manyOrNone(productQuery.getProductByProductSubCategory, [product_sub_category])
     }
 
     static async deleteProduct(id) {

@@ -51,6 +51,28 @@ class SubCategoryController {
         }
     }
 
+    static async getProductSubCategoryByCategoryId(req, res) {
+        const { category_id } = req.params;
+        try {
+            const subCategory = await SubCategoryServices.checkIfCategoryIdExist(category_id);
+            const productSubCategory = subCategory.map((item) => {
+                return item.product_sub_category
+            })            
+            if (productSubCategory) {
+                client.setex(category_id, 300, JSON.stringify(productSubCategory));  /*  expires in five minute*/
+                client.get(category_id, async (error, data) => {
+                    if (data) {
+                        return Response.ok(res, JSON.parse(data), "Product Sub Category fetched successfully.");
+                    }
+                    return Response.badrequestError(res, "Error fetching Product Sub Category.");
+                })
+            }
+        } catch (error) {
+            console.log("SubCategoryController -> getProductSubCategoryByCategoryId -> error", error)
+            return Response.serverError(res, "Internal Server Error.")
+        }
+    }
+
     static async deleteSubCategory(req, res) {
         try {
             const { id } = req.params;

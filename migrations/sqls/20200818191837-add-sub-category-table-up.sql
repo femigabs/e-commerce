@@ -2,7 +2,7 @@
 CREATE TABLE IF NOT EXISTS sub_category (
     id uuid PRIMARY KEY,
     category_id uuid not null,
-    product_sub_category varchar not null,
+    product_sub_category varchar not null UNIQUE,
     description varchar not null,
     created_at timestamp default NOW(),
     updated_at timestamp,

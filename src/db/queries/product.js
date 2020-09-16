@@ -2,7 +2,7 @@ export default {
     createProduct: `
         INSERT INTO product(
             id,
-            sub_category_id,
+            product_sub_category,
             product_name,
             description,
             quantity,
@@ -21,6 +21,9 @@ export default {
     `,
     getProductBySubCategoryId: `
         SELECT * FROM product WHERE sub_category_id=($1)
+    `,
+    getProductByProductSubCategory: `
+        SELECT * FROM product WHERE product_sub_category=($1)
     `,
     deleteProduct: `
         DELETE FROM product WHERE id=($1) RETURNING *
