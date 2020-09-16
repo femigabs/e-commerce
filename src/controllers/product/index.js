@@ -6,12 +6,12 @@ import { client } from '../../config'
 class ProductController {
 
     static async createProduct(req, res) {
-        const { sub_category_id } = req.params;
+        const { product_sub_category } = req.params;
         try {
             const file = req.file;
             const image = await UploadServices.uploadImage(file);
             req.body.product_image = image.Location;
-            const newProduct = await ProductServices.createProduct(sub_category_id, req.body);
+            const newProduct = await ProductServices.createProduct(product_sub_category, req.body);
             return newProduct
                 ? Response.created(res, newProduct, "Product created successfully.")
                 : Response.badrequestError(res, "Error creating Product.")
@@ -51,13 +51,13 @@ class ProductController {
         }
     }
 
-    static async getProductBySubCategoryId(req, res) {
-        const { sub_category_id } = req.params;
+    static async getProductBySubCategory(req, res) {
+        const { product_sub_category } = req.params;
         try {
-            const product = await ProductServices.checkIfSubCategoryIdExist(sub_category_id);
+            const product = await ProductServices.checkIfSubCategoryExist(product_sub_category);
             if (product) {
-                client.setex(sub_category_id, 300, JSON.stringify(product));  /*  expires in five minute*/
-                client.get(sub_category_id, async (error, data) => {
+                client.setex(product_sub_category, 300, JSON.stringify(product));  /*  expires in five minute*/
+                client.get(product_sub_category, async (error, data) => {
                     if (data) {
                         return Response.ok(res, JSON.parse(data), "Product fetched successfully.");
                     }
@@ -65,6 +65,7 @@ class ProductController {
                 })
             }
         } catch (error) {
+            console.log("ProductController -> getProductBySubCategory -> error", error)
             return Response.serverError(res, "Internal Server Error.")
         }
     }

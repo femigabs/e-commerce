@@ -27,7 +27,7 @@ describe("Product endpoints", () => {
 
     it("POST /api/v1/subcategory/product", function (done) {
         agent
-            .post("/api/v1/subcategory/product/6cb1ab80-929f-425b-a634-033aa5912b04")
+            .post("/api/v1/subcategory/product/electronics")
             .set("token", adminToken)
             .field("product_name", "gucci belt")
             .field("description", "black leather")
