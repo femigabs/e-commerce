@@ -29,13 +29,6 @@ app.use(passport.session());
 
 app.use(cors());
 
-app.all('*', (req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
-    res.header('Access-Control-Allow-Headers', '*');
-    next();
-});
-
 app.get('/', (req, res) => {
     res.send('Welcome to e_commerce');
 });
