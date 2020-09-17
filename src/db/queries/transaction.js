@@ -3,12 +3,13 @@ export default {
         INSERT INTO transaction(
             id,
             user_id,
+            cart_id,
             payment_id,
             reference,
             amount,
             status,
             currency
-        ) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *
+        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *
     `,
     verifyTransaction: `
         update transaction set verified=($1), updated_at= now() where reference=($2)

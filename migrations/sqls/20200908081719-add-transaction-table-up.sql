@@ -1,6 +1,6 @@
 /* Replace with your SQL commands */
 CREATE TABLE IF NOT EXISTS transaction(
-    id uuid,
+    id uuid PRIMARY KEY,
     user_id uuid REFERENCES users(id) NOT NULL,
     payment_id VARCHAR,
     reference VARCHAR NOT NULL,

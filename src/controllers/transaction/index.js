@@ -35,8 +35,7 @@ class TransactionController {
         const { email } = res.locals.user;
         try {
             const user = await UserServices.checkIfUserExist(email);
-            const user_id = user.id;
-            const cart = await CartServices.getCartByUserId(user_id)
+            const cart = await CartServices.getCartByUserId(user.id)
             const amount = await CartServices.sumSubTotal(cart[0].id);
             const {
                 card: {
@@ -61,7 +60,7 @@ class TransactionController {
             };
             const transaction = await axios(options);
             const { data } = transaction.data;
-            await TransactionServices.createTransaction(user.id, data);
+            await TransactionServices.createTransaction(user.id, cart[0].id, data);
             return res.json(data)
         } catch (error) {
             return Response.serverError(res, "Internal Server Error.")
