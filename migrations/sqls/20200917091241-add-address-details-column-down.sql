@@ -7,3 +7,6 @@ ALTER TABLE orders
 
 ALTER TABLE orders
     DROP COLUMN IF EXISTS phone_number;
+
+ALTER TABLE orders
+    DROP COLUMN IF EXISTS transaction_id;
