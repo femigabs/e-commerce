@@ -23,6 +23,18 @@ class CartMiddleware {
         return Response.notFoundError(res, 'Cart does not exist');
     }
 
+    static async checkCartProduct(req, res, next) {
+        const { email } = res.locals.user;
+        const user = await UserServices.checkIfUserExist(email);
+        const user_id = user.id;
+        const cart = await CartServices.getCartByUserId(user_id);
+        const cartProduct = await CartServices.getCartProductByCartId(cart.id)
+        if (cartProduct) {
+            return next();
+        }
+        return Response.notFoundError(res, 'Cart is empty');
+    }
+
     static async cart(req, res, next) {
         try {
             const { product_id } = req.params;

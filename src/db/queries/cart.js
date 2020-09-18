@@ -18,6 +18,22 @@ export default {
         SELECT * FROM cart WHERE user_id=($1)
     `,
     getCartProductByCartId: `
+        SELECT 
+            cart_product.id,
+            cart_product.cart_id,
+            product.product_name,
+            product.product_image,
+            product.status,
+            cart_product.product_id,
+            cart_product.quantity,
+            cart_product.price,
+            cart_product.sub_total
+        FROM product
+        JOIN cart_product
+        ON product.id = cart_product.product_id
+        WHERE cart_id=($1)
+    `,
+    getCartProduct: `
         SELECT * FROM cart_product WHERE cart_id=($1)
     `,
     getCartProductByProductId: `
