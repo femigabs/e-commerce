@@ -35,6 +35,10 @@ class CartServices {
         return db.manyOrNone(cartQuery.getCartProductByCartId, [cart_id]);
     }
 
+    static async getCartProduct(cart_id) {
+        return db.manyOrNone(cartQuery.getCartProduct, [cart_id]);
+    }
+
     static async deleteCartProduct(id) {
         return db.oneOrNone(cartQuery.deleteCartProduct, [id])
     }

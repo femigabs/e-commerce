@@ -1,7 +1,7 @@
 import { OrderDetailsServices, UserServices } from '../../services';
 import { Response } from '../../utils';
 
-class OrderController {
+class OrderDetailsController {
 
     static async createOrderDetails(req, res) {
         const { email } = res.locals.user;
@@ -84,4 +84,4 @@ class OrderController {
 
 }
 
-export default OrderController;
+export default OrderDetailsController;

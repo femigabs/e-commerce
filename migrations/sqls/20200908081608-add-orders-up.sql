@@ -1,6 +1,6 @@
 /* Replace with your SQL commands */
 CREATE TABLE IF NOT EXISTS orders(
-    id uuid PRIMARY KEY,
+    id uuid,
     user_id uuid,
     cart_id uuid NOT NULL,
     product_id uuid NOT NULL REFERENCES product(id),

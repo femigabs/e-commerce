@@ -68,7 +68,6 @@ class SubCategoryController {
                 })
             }
         } catch (error) {
-            console.log("SubCategoryController -> getProductSubCategoryByCategoryId -> error", error)
             return Response.serverError(res, "Internal Server Error.")
         }
     }
