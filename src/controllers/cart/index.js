@@ -67,7 +67,6 @@ class CartController {
                 ? Response.ok(res, cart, 'Cart Product deleted successfully')
                 : Response.badrequestError(res, 'Error deleting Cart Product')
         } catch (error) {
-            console.log("CartController -> deleteCartProduct -> error", error)
             return Response.serverError(res, "Internal Server Error.")
         }
     }

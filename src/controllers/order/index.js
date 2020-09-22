@@ -12,10 +12,9 @@ class OrderController {
             const order = await OrderServices.createOrder(cartProduct, user.id);
 
             return order 
-            ? Response.created(res, order, 'Order created successfully')
+            ? Response.created(res, {}, 'Order created successfully')
             : Response.badrequestError(res, "Error creating Order")
         } catch (error) {
-            console.log("OrderController -> createOrder -> error", error)
             return Response.serverError(res, "Internal Server Error.")
         }
     }
