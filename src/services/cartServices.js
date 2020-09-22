@@ -51,8 +51,8 @@ class CartServices {
         return db.oneOrNone(cartQuery.getCartProductById, [id])
     }
 
-    static async checkIfProductIdExist(id) {
-        return db.oneOrNone(cartQuery.getCartProductByProductId, [id])
+    static async checkIfProductIdExist(cart_id, product_id) {
+        return db.oneOrNone(cartQuery.getProductByCartId, [cart_id, product_id])
     }
 
     static async updateCart(id, body) {

@@ -37,9 +37,12 @@ class CartMiddleware {
 
     static async cart(req, res, next) {
         try {
+            const { email } = res.locals.user;
+            const user = await UserServices.checkIfUserExist(email);
+            const user_id = user.id;
+            const cart = await CartServices.getCartByUserId(user_id);
             const { product_id } = req.params;
-
-            const data = await CartServices.checkIfProductIdExist(product_id);
+            const data = await CartServices.checkIfProductIdExist(cart[0].id, product_id);
             if (data) {
                 return Response.conflictError(res, "Product already exist in Cart")
             }

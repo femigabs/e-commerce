@@ -65,7 +65,6 @@ class ProductController {
                 })
             }
         } catch (error) {
-            console.log("ProductController -> getProductBySubCategory -> error", error)
             return Response.serverError(res, "Internal Server Error.")
         }
     }

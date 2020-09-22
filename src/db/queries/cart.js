@@ -36,8 +36,8 @@ export default {
     getCartProduct: `
         SELECT * FROM cart_product WHERE cart_id=($1)
     `,
-    getCartProductByProductId: `
-       SELECT * FROM cart_product WHERE product_id=($1) 
+    getProductByCartId: `
+       SELECT * FROM cart_product WHERE cart_id=($1) AND product_id =($2)
     `,
     deleteCart: `
         DELETE FROM cart WHERE id=($1) RETURNING *
