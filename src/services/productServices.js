@@ -25,7 +25,7 @@ class ProductServices {
     }
 
     static async checkIfProductIdExist(id) {
-        return db.manyOrNone(productQuery.getProductById, [id])
+        return db.oneOrNone(productQuery.getProductById, [id])
     }
 
     static async getAllProduct() {

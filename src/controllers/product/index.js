@@ -69,6 +69,24 @@ class ProductController {
         }
     }
 
+    static async getProductById(req, res) {
+        const { id } = req.params;
+        try {
+            const product = await ProductServices.checkIfProductIdExist(id);
+            if (product) {
+                client.setex(id, 300, JSON.stringify(product));  /*  expires in five minute*/
+                client.get(id, async (error, data) => {
+                    if (data) {
+                        return Response.ok(res, JSON.parse(data), "Product fetched successfully.");
+                    }
+                    return Response.badrequestError(res, "Error fetching Product.");
+                })
+            }
+        } catch (error) {
+            return Response.serverError(res, "Internal Server Error.")
+        }
+    }
+
     static async deleteProduct(req, res) {
         try {
             const { id } = req.params;

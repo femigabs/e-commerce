@@ -31,6 +31,16 @@ class ProductMiddleware {
         next();
     }
 
+    static async checkProduct(req, res, next) {
+        const { product_sub_category } = req.params;
+        const product = await ProductServices.checkIfSubCategoryExist(product_sub_category);
+        console.log("ProductMiddleware -> checkProduct -> product", product.length)
+        if (product.length > 0 ) {
+            return next();
+        }
+        return Response.notFoundError(res, 'Product does not exist');
+    }
+
     static async checkProductId(req, res, next) {
         const { id } = req.params;
         const productId = await ProductServices.checkIfProductIdExist(id);
