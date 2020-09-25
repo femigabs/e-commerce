@@ -13,10 +13,10 @@ class CartController {
             const cart = await CartServices.getCartByUserId(user_id)
             if (cart.length === 0) {
                 const cart = await CartServices.createCart(user_id)
-                const cartProduct = await CartServices.createCartProduct(cart.id, product[0].id, product[0].price, product[0].price)
+                const cartProduct = await CartServices.createCartProduct(cart.id, product.id, product.price, product.price)
                 return Response.created(res, cartProduct, "Cart added successfully.")
             } else if (cart.length > 0) {
-                const cartProduct = await CartServices.createCartProduct(cart[0].id, product[0].id, product[0].price, product[0].price)
+                const cartProduct = await CartServices.createCartProduct(cart[0].id, product.id, product.price, product.price)
                 return Response.created(res, cartProduct, "Cart added successfully.")
             }
             return Response.badrequestError(res, "Error creating Cart")
