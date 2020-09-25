@@ -42,9 +42,11 @@ class CartMiddleware {
             const user_id = user.id;
             const cart = await CartServices.getCartByUserId(user_id);
             const { product_id } = req.params;
-            const data = await CartServices.checkIfProductIdExist(cart[0].id, product_id);
-            if (data) {
-                return Response.conflictError(res, "Product already exist in Cart")
+            if (cart.length > 0) {
+                const data = await CartServices.checkIfProductIdExist(cart[0].id, product_id);
+                if (data) {
+                    return Response.conflictError(res, "Product already exist in Cart")
+                }
             }
         } catch (error) {
             return Response.serverError(res, "Internal server error")
