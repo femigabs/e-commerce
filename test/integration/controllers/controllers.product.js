@@ -71,8 +71,8 @@ describe("Product endpoints", () => {
 
     it("POST /api/v1/product/search", function (done) {
         agent
-            .get("/api/v1/product/search")
-            .post({"product_name": "guc"})
+            .post("/api/v1/product/search")
+            .send({"product_name": "guc"})
             .set("Content-Type", "application/json")
             .expect("Content-Type", /json/)
             .end((err, res) => {
