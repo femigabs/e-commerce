@@ -1,5 +1,4 @@
 import { db, cartQuery } from "../db";
-import { Response } from "../utils";
 import { v4 as uuidv4 } from 'uuid';
 
 class CartServices {
@@ -12,7 +11,6 @@ class CartServices {
     static async createCartProduct(cart_id, product_id, price, sub_total) {
             const id = uuidv4();
             const payload = [id, cart_id, product_id, price, sub_total];
-            console.log("CartServices -> createCartProduct -> payload", payload)
             return db.oneOrNone(cartQuery.createCartProduct, payload);
     }
 

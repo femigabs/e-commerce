@@ -69,9 +69,9 @@ describe("Product endpoints", () => {
             });
     })
 
-    it("GET /api/v1/subcategory/product/search", function (done) {
+    it("POST /api/v1/product/search", function (done) {
         agent
-            .get("/api/v1/subcategory/product/search")
+            .post("/api/v1/product/search")
             .send({"product_name": "guc"})
             .set("Content-Type", "application/json")
             .expect("Content-Type", /json/)

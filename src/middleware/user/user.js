@@ -141,24 +141,21 @@ class UserMiddleware {
     static async verifyToken(req, res, next) {
         const { token } = req.headers;
         if (!token) {
-            return Response.forbiddenError(
-                res,
-                'Token not provided'
-            )
+            return Response.forbiddenError(res, 'Token not provided')
         }
         try {
-            const decoded = Hash.decodeToken(token);
+            const decoded =  Hash.decodeToken(token);
             req.user = {
                 first_name: decoded.first_name,
                 email: decoded.email
             }
             res.locals.user = req.user;
-            next();
-
         } catch (error) {
-            return Response.serverError(res,'Internal server error')
+            return Response.badrequestError(res, error.message)
         }
+        next();
     }
+
 
     static async adminAuth(req, res, next) {
         const { email } = res.locals.user;
@@ -198,10 +195,10 @@ class UserMiddleware {
                 if (is_active) {
                     return next();
                 }
-            } 
+            }
             return Response.notFoundError(res, 'Account is not verified, Please verify account');
         } catch (error) {
-            return Response.serverError(res,"Internal server error")
+            return Response.serverError(res, "Internal server error")
         }
     };
 
