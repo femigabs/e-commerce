@@ -1,6 +1,8 @@
 import 'dotenv/config';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import { Response } from "../../utils";
+
 
 const key = process.env.SECRET;
 
@@ -48,7 +50,7 @@ class Helpers {
      * @return {object}
      */
     static generateToken(first_name, email) {
-        return jwt.sign({ first_name, email }, key, { expiresIn: '1d' });
+        return jwt.sign({ first_name, email }, key, { expiresIn: '10m' });
     }
 
     /**
@@ -58,11 +60,7 @@ class Helpers {
      * @return {object}
      */
     static decodeToken(token) {
-        try {
-            return jwt.verify(token, key);
-        } catch (e) {
-            return error;
-        }
+        return jwt.verify(token, key);
     }
 
 }
